@@ -224,7 +224,7 @@ class MultiLogView(Gtk.Paned):
         for path in self.paths:
             try:
                 files = os.listdir(path)
-            except:
+            except BaseException:
                 logging.debug(
                     _("ERROR: Failed to look for files in '%(path)s'.") %
                     {'path': path})
@@ -397,7 +397,7 @@ class LogBuffer(Gtk.TextBuffer):
             f.close()
 
             self._written = (self._pos - init_pos)
-        except:
+        except BaseException:
             self.insert(self.get_end_iter(),
                         _("Error: Can't open file '%s'\n") % self.logfile)
             self._written = 0
@@ -650,7 +650,7 @@ class CollectorPalette(Palette):
         # FIXME: subprocess or thread
         try:
             self._collector.write_logs(archive=filepath, logbytes=0)
-        except:
+        except BaseException:
             success = False
 
         self.popdown(True)
